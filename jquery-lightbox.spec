@@ -5,7 +5,7 @@ Summary:	jQuery lightBox plugin
 Name:		jquery-%{plugin}
 Version:	0.5
 Release:	1
-License:	CC Attribution SA 2.5
+License:	CC BY-SA 2.5
 Group:		Applications/WWW
 Source0:	http://leandrovieira.com/projects/jquery/lightbox/releases/jquery-lightbox-%{version}.zip
 # Source0-md5:	6ea2479de1e85b45993c1cfa9bacf15f
