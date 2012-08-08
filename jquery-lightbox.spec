@@ -1,18 +1,15 @@
-# TODO
-# - demo package
 %define		plugin	lightbox
 Summary:	jQuery lightbox plugin
 Name:		jquery-%{plugin}
 Version:	0.5
-Release:	2
+Release:	2.5
 License:	BSD
 Group:		Applications/WWW
-Source0:	https://github.com/downloads/krewenki/jquery-lightbox/jquery-lightbox.zip
-# Source0-md5:	b374adbfd69b1b484b6876fb4872b125
+Source0:	https://github.com/krewenki/jquery-lightbox/tarball/master/%{name}.tgz
+# Source0-md5:	14b30ba99c15cf2bb52af3ae21398969
 URL:		http://krewenki.github.com/jquery-lightbox/
 BuildRequires:	closure-compiler
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	unzip
 BuildRequires:	yuicompressor
 Requires:	jquery >= 1.2.3
 BuildArch:	noarch
@@ -24,10 +21,27 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 jQuery Lightbox is a simple port of the popular lightbox script, which
 is based on prototype and scriptaculous, to jQuery.
 
+%package demo
+Summary:	Demo for jQuery.lightbox
+Summary(pl.UTF-8):	Pliki demonstracyjne dla pakietu jQuery.lightbox
+Group:		Development
+Requires:	%{name} = %{version}-%{release}
+
+%description demo
+Demonstrations and samples for jQuery.lightbox.
+
 %prep
-%setup -qn %{name}
+%setup -qc
+mv *-%{name}-*/* .
 
 %{__sed} -i -e 's,\.\./images/,images/,g' css/*.css
+
+# for demo
+install -d demo
+mv index.html demo
+ln -s %{_appdir}/%{plugin}.js demo/jquery.%{plugin}.js
+ln -s %{_appdir}/images demo
+ln -s %{_appdir} demo/css
 
 %build
 install -d build/css
@@ -59,6 +73,9 @@ ln -s %{plugin}-%{version}.min.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}.js
 cp -p build/css/%{plugin}.css $RPM_BUILD_ROOT%{_appdir}/%{plugin}.css
 cp -a images $RPM_BUILD_ROOT%{_appdir}
 
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -a demo/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -66,3 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc LICENSE.txt README.markdown
 %{_appdir}
+
+%files demo
+%defattr(644,root,root,755)
+%{_examplesdir}/%{name}-%{version}
