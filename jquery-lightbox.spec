@@ -2,11 +2,12 @@
 Summary:	jQuery lightbox plugin
 Name:		jquery-%{plugin}
 Version:	0.5
-Release:	2.5
+Release:	3
 License:	BSD
 Group:		Applications/WWW
 Source0:	https://github.com/krewenki/jquery-lightbox/tarball/master/%{name}.tgz
 # Source0-md5:	14b30ba99c15cf2bb52af3ae21398969
+Patch0:		https://github.com/glensc/jquery-lightbox/commit/6a59d113b14328982fdf4291e289c154ddacd64b.patch
 URL:		http://krewenki.github.com/jquery-lightbox/
 BuildRequires:	closure-compiler
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -33,6 +34,7 @@ Demonstrations and samples for jQuery.lightbox.
 %prep
 %setup -qc
 mv *-%{name}-*/* .
+%patch0 -p1
 
 %{__sed} -i -e 's,\.\./images/,images/,g' css/*.css
 
